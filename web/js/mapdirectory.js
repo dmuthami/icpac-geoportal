@@ -134,7 +134,7 @@ function addTableRows() {
     var tableBlockParams;
     var str = "";
     var searchResultsName, format = "";
-    $.each(currJsonObj, function () {
+    $.each(m_CurrJsonObj, function () {
         $.each(this, function (name, value) {
 
             if (name == "title") {
@@ -259,7 +259,7 @@ function galleryDisplayMode() {
     var galleryBlockParams;
     str = "";
     var destinationURL, teaserbackgroundimageurl, teaserHeadingText;
-    $.each(currJsonObj, function () {
+    $.each(m_CurrJsonObj, function () {
         $.each(this, function (name, value) {
 
             if (name == "detail_url") {
@@ -344,7 +344,7 @@ function listDisplayMode() {
     var listBlockParams;
     str = "";
     var searchResultsName, searchResultsDescriptionTitle, searchResultsDescriptionText, format, thumbnail;
-    $.each(currJsonObj, function () {
+    $.each(m_CurrJsonObj, function () {
         $.each(this, function (name, value) {
 
             if (name == "title") {

@@ -145,17 +145,18 @@
                 <div class="row">
                     <div class="col-xs-4">
                         <div class="row">
-                            <div class="col-xs-12">
+                            <div id="idPaginationSummaryTop"  class="col-xs-12">
                                 Showing 1-30 of 2906 results:                           
                             </div>
                         </div>                    
                         <div class="row">
                             <div class="col-xs-12">
                                 <ul class="pagination pagination-sm">
-                                    <li onclick="paginationFirst()"><a href="#"><<</a></li>
-                                    <li onclick="paginationNext()"><a href="#">></a></li>
-                                    <li onclick="paginationPrevious()"><a href="#"><</a></li>
-                                    <li onclick="paginationLast()"><a href="#">>></a></li>
+                                    <li id="idPaginationFirstTop" onclick="paginationFirst()"><a href="#"><<</a></li>
+                                    <li id="idPaginationPreviousTop" onclick="paginationPrevious()"><a href="#"><</a></li>
+                                    <li id="idPaginationRoundTop"><a href="#"><div id="idRoundTop">1</div></a></li>    
+                                    <li id="idPaginationNextTop" onclick="paginationNext()"><a href="#">></a></li>
+                                    <li id="idPaginationLastTop" onclick="paginationLast()"><a href="#">>></a></li>
                                 </ul>
                             </div>
                         </div>                    
@@ -176,7 +177,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary">Save</button>
+                                    <button onclick="saveCSV('maps_data.csv')" type="button" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -283,7 +284,7 @@
 
                 <!-- Pagination -->
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div id="idPaginationSummaryBottom" class="col-xs-12">
                         Showing 1-30 of 2906 results:                           
                     </div>
                 </div>                    
@@ -291,10 +292,11 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <ul class="pagination pagination-sm">
-                            <li onclick="paginationFirst()"><a href="#"><<</a></li>
-                            <li onclick="paginationNext()"><a href="#">></a></li>
-                            <li onclick="paginationPrevious()"><a href="#"><</a></li>
-                            <li onclick="paginationLast()"><a href="#">>></a></li>
+                            <li id="idPaginationFirstBottom" onclick="paginationFirst()"><a href="#"><<</a></li>
+                            <li id="idPaginationPreviousBottom" onclick="paginationPrevious()"><a href="#"><</a></li>
+                            <li id="idPaginationRoundBottom"><a href="#"><div id="idRoundBottom">1</div></a></li>
+                            <li id="idPaginationNextBottom" onclick="paginationNext()"><a href="#">></a></li>
+                            <li id="idPaginationLastBottom" onclick="paginationLast()"><a href="#">>></a></li>
                         </ul>
                     </div>
                 </div>                    
@@ -337,6 +339,7 @@
         <script src="<c:url value="/js/maplib/js/ol.js" />" type="text/javascript"></script> 
         <script src="<c:url value="/js/load-datasets.js" />" type="text/javascript"></script> 
         <script src="<c:url value="/js/pagination.js" />" type="text/javascript"></script> 
+        <script src="<c:url value="/js/download-csv.js" />" type="text/javascript"></script> 
     </body> 
 
 </html>

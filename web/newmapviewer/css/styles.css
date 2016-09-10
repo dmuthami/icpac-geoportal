@@ -3,14 +3,14 @@
  */
       body { overflow: hidden; }
 
-      /* .navbar-offset { margin-top: 50px; }*/
-      #map { position: absolute;  top: 190px; bottom: 0px; left: 0px; right: 0px; }
+      .navbar-offset { margin-top: 50px; }
+      #map { position: absolute; top: 100px; bottom: 0px; left: 0px; right: 0px; }
       #map .ol-zoom { font-size: 1.2em; }
 
-      .zoom-top-opened-sidebar { margin-top: 200px; }
+      .zoom-top-opened-sidebar { margin-top: 5px; }
       .zoom-top-collapsed { margin-top: 45px; }
 
-   /* .container{background-color:#BAF3BE  ; } */
+   .container{background-color:#BAF3BE  ; }
       .mini-submenu{
         display:none;  
         background-color: rgba(255, 255, 255, 0.46);
@@ -23,8 +23,8 @@
       }
 
       .mini-submenu-left {
-        position: relative;
-        top: 5px;
+        position: absolute;
+        top: 110px;
         left: .5em;
         z-index: 40;
       }
@@ -51,4 +51,7 @@
         cursor: pointer;
       }
       div.panel-heading {color: #4CC417;}
+   /* pop up */
+   
+   
    

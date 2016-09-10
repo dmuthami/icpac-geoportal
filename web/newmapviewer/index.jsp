@@ -21,7 +21,8 @@
         <meta name="description" content="ICPAC map viewer">
         <meta name="author" content="david" >
         <title>ICPAC | Map Viewer</title>
-        <link rel="stylesheet" href="assets/css/ol.css" />
+        <!--  <link rel="stylesheet" href="assets/css/ol.css" />-->
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/ol3/3.1.1/ol.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" />
         <!--<link href="css/font-awesome.min.css" rel="stylesheet">-->
@@ -38,7 +39,8 @@
 
 
 
-        <script type="text/javascript" src="assets/js/ol.js"></script>
+        <!--   <script type="text/javascript" src="assets/js/ol.js"></script>-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ol3/3.1.1/ol.min.js"></script>
         <script type="text/javascript" src="assets/js/layerswitchercontrol.js"></script>
         <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -47,10 +49,11 @@
         <script src="js/main.js"></script>
         <script src="js/wow.min.js"></script>
 
-
         <script type="text/javascript">
-            var map;
+            var map, info;
+            ;
             var baseLayers;
+            var imageWMS;
             function applyMargins() {
                 var leftToggler = $(".mini-submenu-left");
                 if (leftToggler.is(":visible")) {
@@ -100,29 +103,25 @@
 
 
             <%
-                try {
-                    String url = request.getParameter("url");
-                    out.print("var url='" + request.getParameter("url") + "';");
-                    String[] parts = url.split("/");
-                    int count = parts.length;
-                    layername = parts[count - 1].split("\\.")[0]; //must escape the.character
-                    workspace = parts[count - 3];
+                String url = request.getParameter("url");
+                out.print("var url='" + request.getParameter("url") + "';");
+                String[] parts = url.split("/");
+                int count = parts.length;
+                String layername = parts[count - 1].split("\\.")[0]; //must escape the.character
+                String workspace = parts[count - 3];
 
-                    out.print("var layername='" + layername + "';");
-                    out.print("var workspace='" + workspace + "';");
-                    out.print("var imageWMS = new ol.layer.Tile({"
-                            + " source: new ol.source.TileWMS({"
-                            + "  url: 'http://localhost/geoserver/wms',"
-                            + "  params: {'FORMAT': 'image/png', "
-                            + "  'VERSION': '1.1.1',"
-                            + " tiled: true,"
-                            + "  LAYERS:'" + workspace + ":" + layername + "',"
-                            + " STYLES: '',}"
-                            + " })"
-                            + " });");
-                } catch (Exception ex) {
-
-                }
+                out.print("var layername='" + layername + "';");
+                out.print("var workspace='" + workspace + "';");
+                out.print("imageWMS = new ol.layer.Tile({"
+                        + " source: new ol.source.TileWMS({"
+                        + "  url: 'http://localhost:8080/geoserver/wms',"
+                        + "  params: {'FORMAT': 'image/png', "
+                        + "  'VERSION': '1.1.1',"
+                        + " tiled: true,"
+                        + "  LAYERS:'" + workspace + ":" + layername + "',"
+                        + " STYLES: '',}"
+                        + " })"
+                        + " });");
 
 
             %>
@@ -130,8 +129,6 @@
 
 
 
-                // check if  radio checked 
-                var baselayer = osm;// by default
 
 
 
@@ -176,31 +173,54 @@
 
                 var mylayers = new ol.layer.Group({
                     layers: [
-                        new ol.layer.Tile({
-                            source: new ol.source.TileJSON({
-                                url: 'http://api.tiles.mapbox.com/v3/' +
-                                        'mapbox.20110804-hoa-foodinsecurity-3month.json',
-                                crossOrigin: 'anonymous'
-                            })
-                        }),
-                        new ol.layer.Heatmap({
-                            source: new ol.source.GeoJSON({
-                                url: 'data/world_cities.json',
-                                projection: 'EPSG:3857'
-                            }),
-                            opacity: 0.9
-                        }),
+                        /*  
+                         new ol.layer.Tile({
+                         source: new ol.source.TileJSON({
+                         url: 'http://api.tiles.mapbox.com/v3/' +
+                         'mapbox.20110804-hoa-foodinsecurity-3month.json',
+                         crossOrigin: 'anonymous'
+                         })
+                         }),
+                         new ol.layer.Heatmap({
+                         source: new ol.source.GeoJSON({
+                         url: 'data/world_cities.json',
+                         projection: 'EPSG:3857'
+                         }),
+                         opacity: 0.9
+                         }),
+                         */
                         imageWMS
 
                     ]
                 });
 
+
+
+
+
+
+
+
+
+
+
+
                 map = new ol.Map({
                     target: "map",
                     controls: ol.control.defaults().extend
                             ([// Add a new Layerswitcher to the map
-                                new ol.control.LayerSwitcher()
+                                new ol.control.LayerSwitcher(),
+                                //new ol.control.ZoomSlider(),
+                                new ol.control.Rotate(),
+                                new ol.control.ScaleLine(),
+                                new ol.control.OverviewMap(),
+                                new ol.control.FullScreen(),
                             ]),
+                    interactions: ol.interaction.defaults().extend([
+                        new ol.interaction.Select({
+                            condition: ol.events.condition.mouseMove
+                        })
+                    ]),
                     layers: [
                         baseLayers, mylayers
                     ],
@@ -209,7 +229,26 @@
                         zoom: 2
                     })
                 });
+                // fit to  extent to loaded  layer
 
+                // var extent = imageWMS.getSource().getExtent();
+                // map.getView().fit(extent, map.getSize());
+
+
+
+                // not working
+                $('#mylayer').on('click', function () {
+
+                    //alert(" am clicked");
+                    //imageWMS.getSource().on("change", function(evt) {
+                    var extent = imageWMS.getSource().getExtent();
+                    alert(extent);
+                    map.getView().fit(extent, map.getSize());
+                    //zoom to layer
+
+
+
+                });
 
                 $('input[name="basemapx"]').on('change', function (e) {
 
@@ -244,8 +283,6 @@
                     visibilityInput.on('change', function () {
                         layer.setVisible(this.checked);
                         // Zoom to layer;
-                        //var extent = layer.getExtent();
-                        //map.getView().fit(extent, map.getSize());
                     });
                     visibilityInput.prop('checked', layer.getVisible());
 
@@ -256,20 +293,26 @@
                     opacityInput.val(String(layer.getOpacity()));
                 }
 
-
-                map.getLayers().forEach(function (layer, i) {
-                    bindInputs('#layer' + i, layer);
-                    if (layer instanceof ol.layer.Group) {
-                        layer.getLayers().forEach(function (sublayer, j) {
-                            bindInputs('#layer' + i + j, sublayer);
-                        });
-                    }
-                });
-
-
+                /*
+                 map.getLayers().forEach(function(layer, i) {
+                 bindInputs('#layer' + i, layer);
+                 if (layer instanceof ol.layer.Group) {
+                 layer.getLayers().forEach(function(sublayer, j) {
+                 bindInputs('#layer' + i + j, sublayer);
+                 });
+                 
+                 }
+                 });
+                 
+                 */
                 $('#layertree li > span').click(function () {
                     $(this).siblings('fieldset').toggle();
                 }).siblings('fieldset').hide();
+
+
+
+
+
 
 
 
@@ -362,6 +405,7 @@
 
     <div class="navbar-offset"></div>
     <div id="map">
+
     </div>
     <div class="row main-row">
         <div class="col-sm-4 col-md-3 sidebar sidebar-left pull-left">
@@ -388,26 +432,28 @@
 
 
                                 <ol>
-                                    <li class="list-group-item"><span>Food insecurity layer</span>
-                                        <fieldset id="layer10">
-                                            <label class="checkbox" for="visible10">
-                                                <input id="visible10" class="visible" type="checkbox"/>visibility
-                                            </label>
-                                            <label>opacity</label>
-                                            <input class="opacity" type="range" min="0" max="1" step="0.01"/>
-                                        </fieldset>
-                                    </li>
-                                    <li class="list-group-item"><span>Heat Map</span>
-                                        <fieldset id="layer11">
-                                            <label class="checkbox" for="visible11">
-                                                <input id="visible11" class="visible" type="checkbox"/>visibility
-                                            </label>
-                                            <label>opacity</label>
-                                            <input class="opacity" type="range" min="0" max="1" step="0.01"/>
-                                        </fieldset>
-                                    </li>
-
-                                    <li class="list-group-item"><span> <% out.print(Modules.toTitleCase(layername.replace("_", " ")));%></span>
+                                    <!--
+                                  <li class="list-group-item"><span>Food insecurity layer</span>
+                                    <fieldset id="layer10">
+                                      <label class="checkbox" for="visible10">
+                                        <input id="visible10" class="visible" type="checkbox"/>visibility
+                                      </label>
+                                      <label>opacity</label>
+                                      <input class="opacity" type="range" min="0" max="1" step="0.01"/>
+                                    </fieldset>
+                                  </li>
+                                    
+                                  <li class="list-group-item"><span>Heat Map</span>
+                                    <fieldset id="layer11">
+                                      <label class="checkbox" for="visible11">
+                                        <input id="visible11" class="visible" type="checkbox"/>visibility
+                                      </label>
+                                      <label>opacity</label>
+                                      <input class="opacity" type="range" min="0" max="1" step="0.01"/>
+                                    </fieldset>
+                                  </li>
+                                    -->
+                                    <li class="list-group-item" id="mylayer"><span> <% out.print(Modules.toTitleCase(layername.replace("_", " ")));%></span>
                                         <fieldset id="layer12">
                                             <label class="checkbox" for="visible12">
                                                 <input id="visible12" class="visible" type="checkbox"/>visibility
