@@ -5,7 +5,7 @@
  */
 
 
-/* global jsonObj */
+/* global m_JsonObj */
 
 // Variable that stores the current position of the cursor
 var m_CurrentCursorPosition;
@@ -31,10 +31,9 @@ m_ListPaginationJsonObj = {};
 //What round of pagination are we in
 var m_Round = 0;
 
-
 function pagination() {
     //Get length of the json object
-    var jsonObjSize = jsonObj.length;
+    var jsonObjSize = m_JsonObj.length;
 
     //If current cursor position is greater than  or equa to the json object length then  do nothing
     if (m_CurrentCursorPosition < jsonObjSize) {
@@ -52,6 +51,7 @@ function pagination() {
 }
 
 function paginationFirst() {
+
     //Set Current Cursor Position to Zeror
     m_CurrentCursorPosition = 0;
 
@@ -70,6 +70,7 @@ function paginationFirst() {
     //Update Pagination Summary Divs
     showPaginationSummary();
 
+
 }
 
 function paginationNext() {
@@ -79,12 +80,16 @@ function paginationNext() {
 
     var val;
     val = m_CurrentCursorPosition;
-    var jsonObjSize = jsonObj.length;
+    var jsonObjSize = m_JsonObj.length;
+
+    //console.log("cur pos " + val + " Total Rec : " + jsonObjSize);
 
     if (val >= jsonObjSize) {
         initializeListPaginationJsonObj(1, 1, 1, 0, 0);
     } else {
         initializeListPaginationJsonObj(1, 1, 1, 1, 1);
+
+
     }
 
     //Decrement what round we are in by 1
@@ -92,6 +97,8 @@ function paginationNext() {
 
     //Update Pagination Summary Divs
     showPaginationSummary();
+
+
 }
 
 function paginationPrevious() {
@@ -136,7 +143,7 @@ function paginationPrevious() {
 function paginationLast() {
     //Get size of main JSONArray
 
-    var jsonObjSize = jsonObj.length;
+    var jsonObjSize = m_JsonObj.length;
 
     //Conduct a modulus operation.
     recordsToGoBack = jsonObjSize % m_BatchOfJsonObjects;
@@ -219,9 +226,9 @@ function returnJSONObjects(currentCurPos, m_BatchOfJsonObjects) {
     var counter = 0;
     var returnedRecords = 0;
 
-    m_TotalRecords = jsonObj.length;
+    m_TotalRecords = m_JsonObj.length;
 
-    $.each(jsonObj, function () {
+    $.each(m_JsonObj, function () {
         if (counter >= currentCurPos && returnedRecords < m_BatchOfJsonObjects) {
             if (m_PaginationStartRecord === -1) {
                 m_PaginationStartRecord = counter;
@@ -283,8 +290,77 @@ function setListPaginationClasses() {
             $("#" + key).removeClass('disabled');
         }
     });
-//    $('#idFilterBytheme').removeClass('glyphicon glyphicon-triangle-bottom');
-//    $('#idFilterBytheme').addClass('glyphicon glyphicon-triangle-right');
+}
+
+function wirePaginationNavigationEvents() {
+    //Pagination First
+    $('#idPaginationFirstTop').on("click", function () {
+
+        if ($('#idPaginationFirstTop').hasClass("disabled") === false) {
+            paginationFirst();
+        }
+
+    });
+    //Pagination Previous
+    $('#idPaginationPreviousTop').on("click", function () {
+
+        if ($('#idPaginationPreviousTop').hasClass("disabled") === false) {
+            paginationPrevious();
+        }
+
+    });
+    //Pagination Next
+    $('#idPaginationNextTop').on("click", function () {
+
+        if ($('#idPaginationNextTop').hasClass("disabled") === false) {
+            paginationNext();
+        }
+
+    });
+    //Pagination Last
+    $('#idPaginationLastTop').on("click", function () {
+
+        if ($('#idPaginationLastTop').hasClass("disabled") === false) {
+            paginationLast();
+        }
+
+    });
+    
+    ////
+    /////Bottom pagination
+    /////
+    //Pagination First
+    $('#idPaginationFirstBottom').on("click", function () {
+
+        if ($('#idPaginationFirstBottom').hasClass("disabled") === false) {
+            paginationFirst();
+        }
+
+    });
+    //Pagination Previous
+    $('#idPaginationPreviousBottom').on("click", function () {
+
+        if ($('#idPaginationPreviousBottom').hasClass("disabled") === false) {
+            paginationPrevious();
+        }
+
+    });
+    //Pagination Next
+    $('#idPaginationNextBottom').on("click", function () {
+
+        if ($('#idPaginationNextBottom').hasClass("disabled") === false) {
+            paginationNext();
+        }
+
+    });
+    //Pagination Last
+    $('#idPaginationLastBottom').on("click", function () {
+
+        if ($('#idPaginationLastBottom').hasClass("disabled") === false) {
+            paginationLast();
+        }
+
+    });
 }
 
 //Document is Ready
@@ -292,17 +368,6 @@ $(document).ready(function () {
 
     //create json from servlet/jsp
     jsonMe();
-
-//    $(document).on("click", ".pagination", function () {
-////        var id = $(this).attr('data-id');
-////        //$container.cycle(idd.replace('#', ''));
-////        console.log("pagination id : " + this);
-//
-//        pagination();
-//
-//        var val = $("#idSelectDisplayMode").val();
-//        selectDisplayMode(val);
-//    });
 
     //call function to test json object load of current objects at init
     paginationNext();
@@ -317,6 +382,26 @@ $(document).ready(function () {
     //first,prev,round,next,last
     initializeListPaginationJsonObj(0, 0, 1, 1, 1);
 
+    try {
+        //loadWorkspaceDatasets("geonode");
+    } catch (err) {
+        console.log("Load Datasets Error " + err.message);
+    }
+
+    //Show on map
+    $(document).on("click", ".showOnMap", function () {
+
+        var href = $(this).attr('data-href');
+
+        if (href !== undefined && href !== null) {
+            //console.log(href);
+            //window.location = 'newmapviewer/index.jsp?url=' + name;
+            showInMap(href);
+        }
+
+    });
+
+    wirePaginationNavigationEvents();
 });
 
 

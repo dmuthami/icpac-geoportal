@@ -7,15 +7,15 @@
 /*Document Ready Function*/
 
 
-var jsonObj;
-var geonodeURL = "http://localhost";
+var m_JsonObj;
+var m_GeonodeURL = "http://localhost";
 
 function jsonMe() {
 
     try {
         //console.log(strMapDirectory);
-        jsonObj = $.parseJSON(strMapDirectory);
-        //console.log(jsonObj);
+        m_JsonObj = $.parseJSON(strMapDirectory);
+        //console.log(m_JsonObj);
 
     } catch (err) {
         console.log(err.message);
@@ -168,8 +168,10 @@ function addTableRows() {
 function createTableBlock(tableBlockParams) {
     //pass the title to function to get the href tag and then store
     //  it in variable to be appended to the Sho in Map hyperlink tag
-    var id = "protectedareas_gha_region"
-    var hreff = "http://localhost/geoserver/rest/workspaces/geonode/featuretypes/protectedareas_gha_region.json";
+    var id = "protectedareas_gha_region";
+    //var hreff = "http://localhost/geoserver/rest/workspaces/geonode/featuretypes/protectedareas_gha_region.json";
+    var hreff = showOnMapURL("geonode", tableBlockParams.tableView[0].searchResultsName);
+    var downLoadLink = downloadShapeZip("geonode", tableBlockParams.tableView[0].searchResultsName);
 
     var str = "<div class='col-xs-3 TitleTable'><p>" + tableBlockParams.tableView[0].searchResultsName + "</p></div>";
 
@@ -186,11 +188,11 @@ function createTableBlock(tableBlockParams) {
 
     str += "<div class='col-xs-2'>" +
             "<a href='#' title='Show on Map'>" +
-            "<span id=" + id + " data-href='" + hreff + "' class='glyphicon glyphicon-map-marker glyphicon-table-custom showOnMap'></span>" +
+            "<span id=" + id + " data-href='"+hreff+"' class='glyphicon glyphicon-map-marker glyphicon-table-custom showOnMap'></span>" +
             "</a>" +
             "</div>";
     str += "<div class='col-xs-2'>" +
-            "<a href='#' title='Download'>" +
+            "<a href='" + downLoadLink + "' title='Download'>" +
             "<span class='glyphicon glyphicon-cloud-download glyphicon-table-custom'></span>" +
             "</a>" +
             "</div>";
@@ -239,15 +241,12 @@ function FilterByTypeEventHandler() {
     }
 }
 
-
-
 /*
  * 
  * Code for the Gallery Goes Here
  * 
  * 
  */
-
 
 function galleryDisplayMode() {
 //Add Gallery div
@@ -263,14 +262,14 @@ function galleryDisplayMode() {
         $.each(this, function (name, value) {
 
             if (name == "detail_url") {
-                destinationURL = geonodeURL + value;
-                console.log("Destination URL : " + value);
+                destinationURL = m_GeonodeURL + value;
+                //console.log("Destination URL : " + value);
             }
             teaserbackgroundimageurl = "images/mapdirectory/thumbnail_025.dat";
 
             if (name == "title") {
                 teaserHeadingText = value;
-                console.log("Teaser Heading Text : " + value);
+                //console.log("Teaser Heading Text : " + value);
             }
         });
 
@@ -313,7 +312,6 @@ function createGalleryBlock(galleryBlockParams) {
     return str;
 }
 
-
 /*
  * 
  * Code for the List Goes Here
@@ -322,21 +320,6 @@ function createGalleryBlock(galleryBlockParams) {
  */
 
 function listDisplayMode() {
-//    listBlockParams =
-//            {"listView":
-//                        [
-//                            {"iconPath": "images/mapdirectory/971040238_kv_logo100.png"},
-//                            {"searchResultsName": "Administrative Units Kenya"},
-//                            {"searchResultsDescriptionTitle": "Mapping Authority"},
-//                            {"searchResultsDescriptionText": "Administrative units Kenya shows national, county and municipal " +
-//                                        "subdivision in the country with the most accurate boundaries recorded digitally and collected in a single data set. " +
-//                                        "The data set contains the administrative units nation, county and municipality, ..."},
-//                            {"format": "<span class='label label-datasett' title='Available as Dataset'>Dataset</span>"},
-//                            {"thumbnail": "images/mapdirectory/thumbnail"}
-//
-//                        ]
-//            };
-//Add list view div
     var str = "<div id='idMasterListView' class='listView'>\n\
         <div id='idListView' class='col-xs-9'></div></div>";
     $("#tableView").prepend(str); //Add the tabe div
@@ -392,6 +375,8 @@ function listDisplayMode() {
 }
 
 function createListBlock(listBlockParams) {
+    var hreff = showOnMapURL("geonode", listBlockParams.listView[1].searchResultsName);
+    var downLoadLink = downloadShapeZip("geonode", listBlockParams.listView[1].searchResultsName);
 //Create List Block
     var str;
     str =
@@ -435,14 +420,12 @@ function createListBlock(listBlockParams) {
             "                                    <span class='button-text'> Read More</span>" +
             "                                </a>" +
             "                                <a class='btn btn-default' target='_top' title='' data-placement='bottom' data-toggle='tooltip' " +
-            "                                   onclick='ga('send', 'event', 'Nedlasting', 'viskart');' " +
-            "                                   href='#' data-original-title='View Administrative units Kenya in map'>" +
-            "                                    <span class='custom-icon custom-icon-kartmarkoer'></span>" +
-            "                                    <span class='button-text'> Show in Map</span>" +
+            "                                   href='#' data-original-title='View "+listBlockParams.listView[1].searchResultsName +" in map'>" +
+            "                                    <span data-href='"+hreff+"' class='custom-icon custom-icon-kartmarkoer showOnMap'></span>" +
+            "                                    <span data-href='"+hreff+"' class='button-text showOnMap'> Show in Map</span>" +
             "                                </a>" +
             "                                <a class='btn btn-default' target='_top' title='' data-placement='bottom' data-toggle='tooltip' " +
-            "                                   onclick='ga('send', 'event', 'Nedlasting', 'lastned');' " +
-            "                                   href='#' data-original-title='Download data for Administrative units Kenya'>" +
+            "                                   href='"+downLoadLink+"' data-original-title='Download data for"+ listBlockParams.listView[1].searchResultsName+"'>" +
             "                                    <span class='custom-icon custom-icon-lastned'></span>" +
             "                                    <span class='button-text'> Download</span>" +
             "                                </a>" +

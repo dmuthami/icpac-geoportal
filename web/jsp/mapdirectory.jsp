@@ -152,11 +152,11 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <ul class="pagination pagination-sm">
-                                    <li id="idPaginationFirstTop" onclick="paginationFirst()"><a href="#"><<</a></li>
-                                    <li id="idPaginationPreviousTop" onclick="paginationPrevious()"><a href="#"><</a></li>
+                                    <li id="idPaginationFirstTop"><a href="#">&laquo;</a></li>
+                                    <li id="idPaginationPreviousTop"><a href="#"><</a></li>
                                     <li id="idPaginationRoundTop"><a href="#"><div id="idRoundTop">1</div></a></li>    
-                                    <li id="idPaginationNextTop" onclick="paginationNext()"><a href="#">></a></li>
-                                    <li id="idPaginationLastTop" onclick="paginationLast()"><a href="#">>></a></li>
+                                    <li id="idPaginationNextTop" ><a href="#">></a></li>
+                                    <li id="idPaginationLastTop" ><a href="#">&raquo;</a></li>
                                 </ul>
                             </div>
                         </div>                    
@@ -292,11 +292,11 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <ul class="pagination pagination-sm">
-                            <li id="idPaginationFirstBottom" onclick="paginationFirst()"><a href="#"><<</a></li>
-                            <li id="idPaginationPreviousBottom" onclick="paginationPrevious()"><a href="#"><</a></li>
+                            <li id="idPaginationFirstBottom" onclick="paginationFirst('idPaginationFirstBottom')"><a href="#"><<</a></li>
+                            <li id="idPaginationPreviousBottom" onclick="paginationPrevious('idPaginationPreviousBottom')"><a href="#"><</a></li>
                             <li id="idPaginationRoundBottom"><a href="#"><div id="idRoundBottom">1</div></a></li>
-                            <li id="idPaginationNextBottom" onclick="paginationNext()"><a href="#">></a></li>
-                            <li id="idPaginationLastBottom" onclick="paginationLast()"><a href="#">>></a></li>
+                            <li id="idPaginationNextBottom" onclick="paginationNext('idPaginationNextBottom')"><a href="#">></a></li>
+                            <li id="idPaginationLastBottom" onclick="paginationLast('idPaginationLastBottom')"><a href="#">>></a></li>
                         </ul>
                     </div>
                 </div>                    
@@ -340,6 +340,8 @@
         <script src="<c:url value="/js/load-datasets.js" />" type="text/javascript"></script> 
         <script src="<c:url value="/js/pagination.js" />" type="text/javascript"></script> 
         <script src="<c:url value="/js/download-csv.js" />" type="text/javascript"></script> 
+        <script src="<c:url value="/js/download-data.js" />" type="text/javascript"></script> 
+        <script src="<c:url value="/js/showOnMap.js" />" type="text/javascript"></script> 
     </body> 
 
 </html>

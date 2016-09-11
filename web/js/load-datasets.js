@@ -3,7 +3,7 @@ $(document).ready(function () {
 
     function loadWorkspaceDatasets(workspace) {
 
-        var url = "../geoserver/rest/workspaces/" + workspace + "/featuretypes.json";
+        var url = "http://localhost/geoserver/rest/workspaces/" + workspace + "/featuretypes.json";
         //  alert (url);
         $.ajax({
             type: "GET",
@@ -44,6 +44,7 @@ $(document).ready(function () {
 
         } else {
 
+            console.log(data.featureTypes[0]);
             for (var i = 0; i < data.featureTypes[0].featureType.length; i++) {
 
                 var rowString = '<tr><td>' + (i + 1) + '</td><td>' + titleCase(data.featureTypes[0].featureType[i].name.replace("_", " ")) + '</td><td>Shapefile</td><td>' +
@@ -112,7 +113,11 @@ $(document).ready(function () {
     });
 
 
-
+    try {
+        loadWorkspaceDatasets("geonode");
+    } catch (err) {
+        console.log("Load Datasets Error " + err.message);
+    }
 
 
 });//doc ready

@@ -11,7 +11,6 @@
     String layername;
     String workspace;
 
-
 %>
 <html>
     <head>
@@ -125,13 +124,6 @@
 
 
             %>
-
-
-
-
-
-
-
                 var osm = new ol.layer.Tile(
                         {title: "OSM",
                             baseLayer: true,
@@ -193,17 +185,6 @@
 
                     ]
                 });
-
-
-
-
-
-
-
-
-
-
-
 
                 map = new ol.Map({
                     target: "map",
