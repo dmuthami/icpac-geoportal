@@ -43,6 +43,7 @@ function showOnMapURL(workspace, featureName) {
             url += "&" + name + "=" + value;
         }
     });
+
     return url;
 }
 
@@ -54,11 +55,25 @@ function showInMap(href) {
     }
 }
 
-
 function callMapViewerServlet(methodType, url) {
 
 
     document.getElementById("idDivServletCaller").action = "/icpac-geoportal/MapViewer?url=" + url;
+    //document.getElementById("idDivServletCaller").action = "/WebApplication1/ShowOnMap";
+    document.getElementById("idDivServletCaller").method = methodType;
+    document.getElementById("idDivServletCaller").submit();
+
+
+}
+
+function showInMap2(workspace, featurename) {
+    callMapViewerServlet2("POST", workspace, featurename);
+
+}
+function callMapViewerServlet2(methodType, workspace, featurename) {
+
+
+    document.getElementById("idDivServletCaller").action = "/icpac-geoportal/MapViewer?workspace=" + workspace + "&" + "layername=" + featurename;
     //document.getElementById("idDivServletCaller").action = "/WebApplication1/ShowOnMap";
     document.getElementById("idDivServletCaller").method = methodType;
     document.getElementById("idDivServletCaller").submit();

@@ -27,25 +27,25 @@
         <!--<link href="css/font-awesome.min.css" rel="stylesheet">-->
         <link href="css/animate.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
-        <link href="css/main.css" rel="stylesheet">
-        <link href="css/responsive.css" rel="stylesheet">
+        <link href="newmapviewer/css/main.css" rel="stylesheet">
+        <link href="newmapviewer/css/responsive.css" rel="stylesheet">
         <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
         <![endif]--> 
 
-        <link href="css/styles.css" rel="stylesheet">
+        <link href="newmapviewer/css/styles.css" rel="stylesheet">
 
 
 
         <!--   <script type="text/javascript" src="assets/js/ol.js"></script>-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/ol3/3.1.1/ol.min.js"></script>
-        <script type="text/javascript" src="assets/js/layerswitchercontrol.js"></script>
+        <script type="text/javascript" src="js/maplib/js/layerswitchercontrol.js"></script>
         <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <script src="js/jquery.prettyPhoto.js"></script>
         <script src="js/jquery.isotope.min.js"></script>
-        <script src="js/main.js"></script>
+        <script src="newmapviewer/js/main.js"></script>
         <script src="js/wow.min.js"></script>
 
         <script type="text/javascript">
@@ -102,13 +102,15 @@
 
 
             <%
-                String url = request.getParameter("url");
+                String workspace = request.getParameter("workspace");
+                String layername = request.getParameter("layername");
+                /*
                 out.print("var url='" + request.getParameter("url") + "';");
                 String[] parts = url.split("/");
-                int count = parts.length;
+                int count = parts.length                
                 String layername = parts[count - 1].split("\\.")[0]; //must escape the.character
                 String workspace = parts[count - 3];
-
+                 */
                 out.print("var layername='" + layername + "';");
                 out.print("var workspace='" + workspace + "';");
                 out.print("imageWMS = new ol.layer.Tile({"

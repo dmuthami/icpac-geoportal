@@ -171,6 +171,8 @@ function createTableBlock(tableBlockParams) {
     var id = "protectedareas_gha_region";
     //var hreff = "http://localhost/geoserver/rest/workspaces/geonode/featuretypes/protectedareas_gha_region.json";
     var hreff = showOnMapURL("geonode", tableBlockParams.tableView[0].searchResultsName);
+    var workspace = "geonode";
+    var featurename = listBlockParams.listView[1].searchResultsNam;
     var downLoadLink = downloadShapeZip("geonode", tableBlockParams.tableView[0].searchResultsName);
 
     var str = "<div class='col-xs-3 TitleTable'><p>" + tableBlockParams.tableView[0].searchResultsName + "</p></div>";
@@ -188,7 +190,7 @@ function createTableBlock(tableBlockParams) {
 
     str += "<div class='col-xs-2'>" +
             "<a href='#' title='Show on Map'>" +
-            "<span id=" + id + " data-href='"+hreff+"' class='glyphicon glyphicon-map-marker glyphicon-table-custom showOnMap'></span>" +
+            "<span id=" + id + " data-href='" + hreff + "' data-workspace='" + workspace + "' data-featurename='" + featurename + "' class='glyphicon glyphicon-map-marker glyphicon-table-custom showOnMap'></span>" +
             "</a>" +
             "</div>";
     str += "<div class='col-xs-2'>" +
@@ -375,7 +377,10 @@ function listDisplayMode() {
 }
 
 function createListBlock(listBlockParams) {
+    //var hreff = showOnMapURL("geonode", listBlockParams.listView[1].searchResultsName);
     var hreff = showOnMapURL("geonode", listBlockParams.listView[1].searchResultsName);
+    var workspace = "geonode";
+    var featurename = listBlockParams.listView[1].searchResultsName;
     var downLoadLink = downloadShapeZip("geonode", listBlockParams.listView[1].searchResultsName);
 //Create List Block
     var str;
@@ -420,12 +425,12 @@ function createListBlock(listBlockParams) {
             "                                    <span class='button-text'> Read More</span>" +
             "                                </a>" +
             "                                <a class='btn btn-default' target='_top' title='' data-placement='bottom' data-toggle='tooltip' " +
-            "                                   href='#' data-original-title='View "+listBlockParams.listView[1].searchResultsName +" in map'>" +
-            "                                    <span data-href='"+hreff+"' class='custom-icon custom-icon-kartmarkoer showOnMap'></span>" +
-            "                                    <span data-href='"+hreff+"' class='button-text showOnMap'> Show in Map</span>" +
+            "                                   href='#' data-original-title='View " + listBlockParams.listView[1].searchResultsName + " in map'>" +
+            "                                    <span data-href='" + hreff + "' data-workspace='" + workspace + "' data-featurename='" + featurename + "' class='custom-icon custom-icon-kartmarkoer showOnMap'></span>" +
+            "                                    <span data-href='" + hreff + "' data-workspace='" + workspace + "' data-featurename='" + featurename + "' class='button-text showOnMap'> Show in Map</span>" +
             "                                </a>" +
             "                                <a class='btn btn-default' target='_top' title='' data-placement='bottom' data-toggle='tooltip' " +
-            "                                   href='"+downLoadLink+"' data-original-title='Download data for"+ listBlockParams.listView[1].searchResultsName+"'>" +
+            "                                   href='" + downLoadLink + "' data-original-title='Download data for" + listBlockParams.listView[1].searchResultsName + "'>" +
             "                                    <span class='custom-icon custom-icon-lastned'></span>" +
             "                                    <span class='button-text'> Download</span>" +
             "                                </a>" +

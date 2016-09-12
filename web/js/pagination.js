@@ -325,7 +325,7 @@ function wirePaginationNavigationEvents() {
         }
 
     });
-    
+
     ////
     /////Bottom pagination
     /////
@@ -391,13 +391,10 @@ $(document).ready(function () {
     //Show on map
     $(document).on("click", ".showOnMap", function () {
 
-        var href = $(this).attr('data-href');
-
-        if (href !== undefined && href !== null) {
-            //console.log(href);
-            //window.location = 'newmapviewer/index.jsp?url=' + name;
-            showInMap(href);
-        }
+        var workspace = $(this).attr('data-workspace');
+        var featurename = $(this).attr('data-featurename');
+        alert(workspace + " "+featurename)
+        showInMap2(workspace,featurename);
 
     });
 
