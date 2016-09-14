@@ -37,7 +37,7 @@
         <link href="<c:url value="/css/main.css"/>" rel="stylesheet">
         <link href="<c:url value="/css/responsive.css"/>" rel="stylesheet">
         <link href="<c:url value="/css/mapdirectory.css"/>" rel="stylesheet">
-        <link href="<c:url value="/css/mapdirectorylist.css"/>" rel="stylesheet">   
+        <link href="<c:url value="/css/mapdirectorylist.css"/>" rel="stylesheet">
         <link href="<c:url value="/js/maplib/js/ol.css"/>" rel="stylesheet" type="text/css"/>   
 
         <!--[if lt IE 9]>
@@ -78,7 +78,7 @@
                                 </ul>
                                 <div class="search">
                                     <form role="form">
-                                        <input type="text" class="search-form" autocomplete="off" placeholder="Search">
+                                        <input id="idSearchMapDirectory"  type="text" class="search-form" autocomplete="off" placeholder="Search">
                                         <i class="fa fa-search"></i>
                                     </form>
                                 </div>
@@ -210,97 +210,131 @@
 
             <div id="mainContainer" class="container">
 
-                <div id="tableView" class="row search-results">
-                    <!-- 
-                    ------------------
-                    --------------------------------------------------------------------
-                    Add table, Gallery, List of Divs programmatically added here
-                    
-                    ---------------------------------------------------------------------
-                    
-                    ---------------------------------------------------------------------
-                    --------------------------------------------------------------------
-                    ------------------------------------------------------------------------
-                    -------------------------------------------------------------------------
-                    ------------------------------------------------------------------------
-                    -->
+                <div class="col-xs-10">
+                    <div id="tableView" class="row search-results">
+                        <!-- 
+                        ------------------
+                        --------------------------------------------------------------------
+                        Add table, Gallery, List of Divs programmatically added here
+                        
+                        ---------------------------------------------------------------------
+                        
+                        ---------------------------------------------------------------------
+                        --------------------------------------------------------------------
+                        ------------------------------------------------------------------------
+                        -------------------------------------------------------------------------
+                        ------------------------------------------------------------------------
+                        -->
 
+                    </div><!-- Table View-->
+                </div><!-- Table View-->
 
-
-                    <!-- End of Add table, Gallery, List of Divs programmatically-->
-                    <div class="col-xs-3">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                Filter  
-                            </div>   
-                        </div>
-
-                        <!-- By Theme-->
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="row">
-                                    <div class="col-xs-2">
-                                        e<span id="idFilterBytheme"  class="glyphicon glyphicon-triangle-right" data-toggle="collapse" data-target="#idTheme"></span>
-                                    </div>
-                                    <div class="col-xs-3">
-                                        Theme
-                                    </div>
-                                    <!--<div class="col-xs-6"></div> -->
+                <div class="col-xs-2 wow fadeInDown">
+                    <div class="accordion">
+                        Filter Your Search for:
+                        <span class="separator-small"></span>
+                        <div class="panel-group" id="accordion1">
+                            <div class="panel panel-default">
+                                <div class="panel-heading active">
+                                    <h3 class="panel-title">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne1">
+                                            Theme
+                                            <i class="fa fa-angle-right pull-right custom-filter"></i>
+                                        </a>
+                                    </h3>
                                 </div>
-                                <div class="row">
-                                    <div id="idTheme" class="collapse col-xs-offset-3">
-                                        <p>&nbsp;&nbsp;&nbsp;Other (1)</p>
-                                        <p>&nbsp;&nbsp;&nbsp;Basic geodata (2)</p>
-                                        <p>&nbsp;&nbsp;&nbsp;Coast / fisheries (1)</p>
-                                    </div>   
-                                </div>
-                            </div> 
-                        </div>
-                        <!-- By Type-->
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="row">
-                                    <div class="col-xs-2">
-                                        <span id="idFilterByType"  class="glyphicon glyphicon-triangle-right" data-toggle="collapse" data-target="#idType"></span>
-                                    </div>
-                                    <div class="col-xs-3">
-                                        Type
-                                    </div>
-                                    <!--<div class="col-xs-6"></div> -->
-                                </div>
-                                <div class="row">
-                                    <div id="idType" class="collapse col-xs-offset-3">
-                                        <p>&nbsp;&nbsp;&nbsp; Shapefile (1)</p>
-                                        <p>&nbsp;&nbsp;&nbsp; Tiff (2)</p>
-                                        <p>&nbsp;&nbsp;&nbsp; SQL (1)</p>
-                                    </div>   
-                                </div>
-                            </div> 
-                        </div>   
 
-                    </div>  
-                </div>
-                <hr>
+                                <div id="collapseOne1" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <p>Basic Geodata (524)</p>
+                                        <p>Coast/Fisheries(5)</p>
+                                        <p>Other(7)</p>
+                                        <p>Demographics (21)</p>
+                                        <p>Agriculture(149)</p>
+                                        <p>Imagery(456)</p>
+                                        <p>Climate(85)</p>
+                                        <p>Land(19)</p>
+                                        <p>Water(19)</p>
+                                        <p>Health(6)</p>
+                                        <p>Conservation(64)</p>
+                                        <p>Environment(91)</p>
+                                        <p>Forest Monitoring(42)</p>
+                                        <p>Infrastructure(42)</p>
 
-                <!-- Pagination -->
+                                    </div>
+                                </div>
+                            </div><!-- Filter by Theme-->
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseTwo1">
+                                            Type
+                                            <i class="fa fa-angle-right pull-right"></i>
+                                        </a>
+                                    </h3>
+                                </div>
+                                <div id="collapseTwo1" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <p>Dataset(2135)</p>
+                                        <p>Data packet(3)</p>
+                                        <p>Service(332)</p>
+                                        <p>Service Layer(332)</p>
+                                        <p>Application(332)</p>
+                                    </div>
+                                </div>
+                            </div><!-- Filter by Type-->
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseTwo1">
+                                            Format
+                                            <i class="fa fa-angle-right pull-right"></i>
+                                        </a>
+                                    </h3>
+                                </div>
+                                <div id="collapseTwo2" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <p>REST API(1)</p>
+                                        <p>WCS service(3)</p>
+                                        <p>WFS Service(38)</p>
+                                        <p>WMS Service(675)</p>
+                                        <p>Webservice(8)</p>
+                                    </div>
+                                </div>
+                            </div><!-- Filter by Type-->
+                        </div><!--/#accordion1-->
+
+                    </div>
+
+                </div> <!-- Filters-->
+
+            </div>
+
+            <hr>
+
+            <!-- Pagination -->
+            <div id="idPaginationFooterContainer" class="container">
                 <div class="row">
                     <div id="idPaginationSummaryBottom" class="col-xs-12">
                         Showing 1-30 of 2906 results:                           
                     </div>
-                </div>                    
+                </div>  
 
                 <div class="row">
                     <div class="col-xs-12">
                         <ul class="pagination pagination-sm">
-                            <li id="idPaginationFirstBottom" onclick="paginationFirst('idPaginationFirstBottom')"><a href="#"><<</a></li>
-                            <li id="idPaginationPreviousBottom" onclick="paginationPrevious('idPaginationPreviousBottom')"><a href="#"><</a></li>
+                            <li id="idPaginationFirstBottom" ><a href="#"><<</a></li>
+                            <li id="idPaginationPreviousBottom" ><a href="#"><</a></li>
                             <li id="idPaginationRoundBottom"><a href="#"><div id="idRoundBottom">1</div></a></li>
-                            <li id="idPaginationNextBottom" onclick="paginationNext('idPaginationNextBottom')"><a href="#">></a></li>
-                            <li id="idPaginationLastBottom" onclick="paginationLast('idPaginationLastBottom')"><a href="#">>></a></li>
+                            <li id="idPaginationNextBottom"><a href="#">></a></li>
+                            <li id="idPaginationLastBottom"><a href="#">>></a></li>
                         </ul>
                     </div>
-                </div>                    
+                </div>                
             </div>
+
             <!-- End of Table tags------------------------------------ -->
             <!-- ----------------------------------------------------- -->
             <!-- ----------------------------------------------------- -->
@@ -342,6 +376,7 @@
         <script src="<c:url value="/js/download-csv.js" />" type="text/javascript"></script> 
         <script src="<c:url value="/js/download-data.js" />" type="text/javascript"></script> 
         <script src="<c:url value="/js/showOnMap.js" />" type="text/javascript"></script> 
+        <script src="<c:url value="/js/search.js" />" type="text/javascript"></script>
     </body> 
 
 </html>

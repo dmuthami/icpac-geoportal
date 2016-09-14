@@ -57,7 +57,7 @@
                                 </ul>
                                 <div class="search">
                                     <form role="form">
-                                        <input type="text" class="search-form" autocomplete="off" placeholder="Search">
+                                        <input id="idSearch" type="text" class="search-form" autocomplete="off" placeholder="Search">
                                         <i class="fa fa-search"></i>
                                     </form>
                                 </div>
@@ -345,6 +345,7 @@
     <script src="<c:url value="/js/jquery.isotope.min.js" />"></script>
     <script src="<c:url value="/js/main.js" />"></script>
     <script src="<c:url value="/js/wow.min.js" />"></script>  
+    <script src="<c:url value="/js/search.js" />"></script>  
 </body>
 
 </html>

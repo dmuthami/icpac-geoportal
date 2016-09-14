@@ -829,7 +829,12 @@ input.search-form:hover {
 
 a.accordion-toggle  i{
   width: 45px;
-  line-height: 44px;
+  /*
+  * Changed by David Muthami on 14/09/2016
+  * line-height: 44px; 
+  */
+  
+  line-height: 37px;
   font-size: 20px;
   margin-top: -10px;
   text-align: center;

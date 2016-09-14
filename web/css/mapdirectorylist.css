@@ -52,9 +52,9 @@ and open the template in the editor.
     border-radius: 0;
     height: 34px;
     line-height: 16pt;
-    
+
     text-decoration: none;
-    
+
     display: inline-block;
     padding: 6px 12px;
     text-align: center;
@@ -84,3 +84,14 @@ hr {
     border: 0;
     border-top: 1px solid #eee;
 }
+
+hr {
+    height: 0;
+    box-sizing: content-box;
+}
+
+
+/*-----------------------Filter Custom CSS---------------------------*/
+
+
+/*-----------------------End of Filter Custom CSS----------------*/

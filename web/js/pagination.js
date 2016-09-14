@@ -15,7 +15,7 @@ m_CurrentCursorPosition = 0;
 var m_BatchOfJsonObjects;
 m_BatchOfJsonObjects = 10;
 
-//object showing current objetcs loaded
+//object showing current objects loaded
 var m_CurrJsonObj;
 
 //pagination round 
@@ -55,14 +55,11 @@ function paginationFirst() {
     //Set Current Cursor Position to Zeror
     m_CurrentCursorPosition = 0;
 
+    //Call pagination
     pagination();
 
-    var val = $("#idSelectDisplayMode").val();
-    selectDisplayMode(val);
-
-    //intialize the list tag pagination summmary div
-    //first,prev,round,next,last
-    initializeListPaginationJsonObj(0, 0, 1, 1, 1);
+    //Determine how pagination  links are displayed i.e active or disabled
+    analyseListPagination(1, 0);
 
     //Decrement what round we are in by 1
     m_Round = 1;
@@ -78,19 +75,8 @@ function paginationNext() {
     //fire up pagination 
     pagination();
 
-    var val;
-    val = m_CurrentCursorPosition;
-    var jsonObjSize = m_JsonObj.length;
-
-    //console.log("cur pos " + val + " Total Rec : " + jsonObjSize);
-
-    if (val >= jsonObjSize) {
-        initializeListPaginationJsonObj(1, 1, 1, 0, 0);
-    } else {
-        initializeListPaginationJsonObj(1, 1, 1, 1, 1);
-
-
-    }
+    //Determine how pagination  links are displayed i.e active or disabled
+    analyseListPagination(3, 0);
 
     //Decrement what round we are in by 1
     m_Round++;
@@ -125,12 +111,9 @@ function paginationPrevious() {
     //Call paginationNext() function
     pagination();
 
-    //Determine what list tags for pagination require to be disabled and active
-    if (requiredCursorPosition === 0) {
-        initializeListPaginationJsonObj(0, 0, 1, 1, 1);
-    } else {
-        initializeListPaginationJsonObj(1, 1, 1, 1, 1);
-    }
+    //Determine how pagination  links are displayed i.e active or disabled
+    //pass also the arument ointing to the required cursor location
+    analyseListPagination(2, requiredCursorPosition);
 
     //Decrement what round we are in by 1
     m_Round--;
@@ -138,6 +121,71 @@ function paginationPrevious() {
     //Update Pagination Summary Divs
     showPaginationSummary();
 
+}
+
+function analyseListPagination(firedby, requiredCursorPosition) {
+    /**
+     * firedy hollds 1,2,3 and 4 values only
+     * 1=first;2=previous;3=next;4=last
+     * */
+
+    if (firedby === 1) {//First
+        var val;
+        val = m_CurrentCursorPosition;
+        var jsonObjSize = m_JsonObj.length;
+
+        if (val < jsonObjSize) {//means there is a possibility to go next in future
+
+            /*
+             * intialize the list tag pagination summmary div
+             * first,prev,round,next,last
+             * 0=off
+             * 1=on
+             **/
+            initializeListPaginationJsonObj(0, 0, 1, 1, 1);
+        } else if (val === jsonObjSize) {
+            /*
+             * intialize the list tag pagination summmary div
+             * first,prev,round,next,last
+             * 0=off
+             * 1=on
+             **/
+            initializeListPaginationJsonObj(0, 0, 1, 0, 0);
+        }
+    } else if (firedby === 3) { //next
+        var val;
+        val = m_CurrentCursorPosition;
+        var jsonObjSize = m_JsonObj.length;
+
+        //console.log("cur pos " + val + " Total Rec : " + jsonObjSize);
+
+        if (val > jsonObjSize) { //Can only go back
+            initializeListPaginationJsonObj(1, 1, 1, 0, 0);
+        } else if (val === jsonObjSize) {
+            var r = jsonObjSize - m_BatchOfJsonObjects;
+
+            if (r > m_BatchOfJsonObjects) {//can go previous
+                initializeListPaginationJsonObj(1, 1, 1, 0, 0);
+            } else {//cannot navigate
+                initializeListPaginationJsonObj(0, 0, 1, 0, 0);
+            }
+        } else {//Can go previous,next,last and first
+            initializeListPaginationJsonObj(1, 1, 1, 1, 1);
+        }
+    } else if (firedby === 4) {//last
+        //intialize the list tag pagination summmary div
+        //first,prev,round,next,last
+        initializeListPaginationJsonObj(1, 1, 1, 0, 0);
+    } else if (firedby === 2) {//Previous
+        //Determine what list tags for pagination require to be disabled and active
+
+        if (requiredCursorPosition === 0) {//Can only go forward
+            initializeListPaginationJsonObj(0, 0, 1, 1, 1);
+        } else {
+
+            initializeListPaginationJsonObj(1, 1, 1, 1, 1);
+        }
+    }
 }
 
 function paginationLast() {
@@ -165,9 +213,8 @@ function paginationLast() {
 
     pagination();
 
-    //intialize the list tag pagination summmary div
-    //first,prev,round,next,last
-    initializeListPaginationJsonObj(1, 1, 1, 0, 0);
+    //Determine how pagination  links are displayed i.e active or disabled
+    analyseListPagination(4);
 
     //Decrement what round we are in by 1
     var mod = jsonObjSize % m_BatchOfJsonObjects;//modulus
@@ -376,7 +423,7 @@ $(document).ready(function () {
     selectDisplayMode(val);
 
     //Filters
-    registerEvents();
+    //registerEvents();//Register Events to their respective event handlers
 
     //intialize the list tag pagination summmary div
     //first,prev,round,next,last
@@ -393,12 +440,13 @@ $(document).ready(function () {
 
         var workspace = $(this).attr('data-workspace');
         var featurename = $(this).attr('data-featurename');
-        alert(workspace + " "+featurename)
-        showInMap2(workspace,featurename);
+        showInMap2(workspace, featurename);
 
     });
 
     wirePaginationNavigationEvents();
+
+    wireSeachMapDirectory();
 });
 
 

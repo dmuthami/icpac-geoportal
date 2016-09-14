@@ -73,12 +73,12 @@ function removeGalleryListTableDivs() {
  */
 
 function tableDisplayMode() {
-    addTableDiv()//Create table div
+    addTableDiv();//Create table div
     //Create filter div 
     tableHeader(); //Create table header
     addTableRows(); //Add table rows
     //addTableRows(); //Add another table row
-    registerEvents(); //Register Events to their respective event handlers
+
 }
 
 function addTableDiv() {
@@ -89,7 +89,7 @@ function addTableDiv() {
      $("#mainContainer").append(str);//Add the tabe header*/
 
 //add table
-    str = "<div id='idTable' class='col-xs-9'></div>";
+    str = "<div id='idTable' class='col-xs-12'></div>";
     $("#tableView").prepend(str); //Add the tabe div
 
     //Add map directory div
@@ -172,7 +172,7 @@ function createTableBlock(tableBlockParams) {
     //var hreff = "http://localhost/geoserver/rest/workspaces/geonode/featuretypes/protectedareas_gha_region.json";
     var hreff = showOnMapURL("geonode", tableBlockParams.tableView[0].searchResultsName);
     var workspace = "geonode";
-    var featurename = listBlockParams.listView[1].searchResultsNam;
+    var featurename = tableBlockParams.tableView[1].searchResultsNam;
     var downLoadLink = downloadShapeZip("geonode", tableBlockParams.tableView[0].searchResultsName);
 
     var str = "<div class='col-xs-3 TitleTable'><p>" + tableBlockParams.tableView[0].searchResultsName + "</p></div>";
@@ -252,7 +252,7 @@ function FilterByTypeEventHandler() {
 
 function galleryDisplayMode() {
 //Add Gallery div
-    var str = "<div id='idGallery' class='col-xs-9'></div>";
+    var str = "<div id='idGallery' class='col-xs-12'></div>";
     $("#tableView").prepend(str); //Add the talbe div
 
     //Create gallery blocks
@@ -323,7 +323,7 @@ function createGalleryBlock(galleryBlockParams) {
 
 function listDisplayMode() {
     var str = "<div id='idMasterListView' class='listView'>\n\
-        <div id='idListView' class='col-xs-9'></div></div>";
+        <div id='idListView' class='col-xs-12'></div></div>";
     $("#tableView").prepend(str); //Add the tabe div
 
     var listBlockParams;
@@ -441,5 +441,40 @@ function createListBlock(listBlockParams) {
             "                                </a>" +
             "                            </div>" +
             "                        </div>                      ";
+    str += "<hr></hr>";
     return str;
+}
+
+function wireSeachMapDirectory() {
+//    $('#idSearchMapDirectory').keypress(function (event) {
+//
+//        if (event.which === 13) {
+//            //Enter Pressed
+//            searchParam = $(this).val();
+//            alert(searchParam);
+//            //Call AJAX  function to return json object
+//            searchFromMapDirectory(searchParam);
+//
+//            alert("wow");
+//
+//
+//        }
+//
+//
+//
+//        //Perform search on json object
+//
+//    });
+
+    $('#idSearchMapDirectory').keydown(function (event) {
+
+        //Enter Pressed
+        searchParam = $(this).val();
+        //alert(searchParam);
+
+        //Call AJAX  function to return json object
+        //Perform search on json object
+        searchRegexMapDirectory(searchParam);
+
+    });
 }

@@ -112,6 +112,8 @@ body {
     border-bottom-color: #414042;
     border-bottom-style: solid;
     border-bottom-width: 1px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     display: block;
 }
 
